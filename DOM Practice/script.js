@@ -210,6 +210,165 @@
 
 
 //EVENTS
+//3 WAYS
+//1. Direct Onclick method in HTML
+//2. Using element.onclick
+// const btn = document.querySelector(".btn-headline");
+// btn.onclick = ()=>{
+//     console.log("You Clicked Me");
+// }
+
+//3. Using addEventListener
+// const clickMe = ()=>{
+//     console.log("You Clicked Me");
+// }
+// const btn = document.querySelector(".btn-headline");
+// btn.addEventListener("click",clickMe);
+
+//THIS KEYWORD IN EVENT HANDLER
+// const btn = document.querySelector(".btn-headline");
+// btn.addEventListener("click",function(){
+//     console.log("You Clicked Me");
+//     console.log(this);
+//     this.style.backgroundColor="grey";
+// });
+
+//In Arrow function value to this is taken from surrounding
+// but in normal function it is the element on which event is attached
+
+// const allButtons = document.querySelectorAll(".btn");
+// for(let button of allButtons){
+//     button.addEventListener("click",function(){
+//         console.log(this.textContent);
+//     });
+// }
+//we cant use arrow function here because this will not refer to button element
+
+//EVENT OBJECT
+// const btn = document.querySelector(".btn-headline");
+// btn.addEventListener("click",function(event){
+//     console.log(event);
+//     console.log(event.currentTarget)
+//     console.log(event.target);
+//     console.log(event.target.textContent);
+//     console.log(this.textContent);
+// });
+
+
+//When Event lister is added to an element then browser creates an event object and passes it to the event handler function
+//event object contains useful information about the event that occured
+//most useful property of event object is target property which references the element on which the event occured
+//In normal function this keyword refers to the element on which event is attached
+//In arrow function this keyword refers to the surrounding where it is written
+
+//Jab browser ko ata chala ki user ne event perform kia
+//jo hum listen kar rahe hai
+//browser 
+//1) callback func hai vo js ko dega
+//2) js call stack me jayega
+//3) js callback function ko execute karega aur event object ko pass karega
+//4) event object me event ke bare me useful information hogi
+//5) js call stack se callback function ko hata dega
+//6) browser ko callback function ke execute hone ki information dega
+
+
+
+//KEYPRESS EVENT
+
+// const body = document.body;
+// body.addEventListener("keypress",(event)=>{
+//     console.log(event)
+//     console.log(event.key);
+//     console.log(event.code);
+// });
+
+
+//MouseOver Event
+// const mainButton = document.querySelector(".btn-headline");
+// mainButton.addEventListener("mouseover",(event)=>{
+//     console.log("Mouse Over Event");
+//     console.log(event);
+// });
+// mainButton.addEventListener("mouseout",(event)=>{
+//     console.log("Mouse Out Event");
+//     console.log(event);
+// });
+// mainButton.addEventListener("mouseenter",(event)=>{
+//     console.log("Mouse Enter Event");
+//     console.log(event);
+// });
+// mainButton.addEventListener("mouseleave",(event)=>{
+//     console.log("Mouse Leave Event");
+//     console.log(event);
+// });
+
+//difference between mouseover and mouseout and mouseenter and mouseleave
+//mouseover and mouseout bubble up
+//mouseenter and mouseleave do not bubble up
+
+//EVENT BUBBLING / EVENT PROPAGATION
+//Event Bubbling is a type of event propagation where the event first triggers on the innermost target element and then successively triggers on the ancestors of the target element in the same hierarchy until it reaches the outermost DOM element or until it is stopped.
+
+
+
+//EVENT CAPTURING
+//event capturing is the opposite of event bubbling
+//in event capturing the event first triggers on the outermost DOM element and then successively triggers on the descendants of the target element in the same hierarchy until it reaches the innermost target element or until it is stopped.
+
+
+//EVENT DELEGATION
+//event delegation is a technique of using event bubbling to handle events at a higher level in the DOM rather than attaching event listeners to individual elements.
+//it is a very efficient way of handling events because we can attach a single event listener to a parent element and handle events for all its child elements.
+
+
+const todoForm = document.querySelector(".form-todo");
+const todoInput = document.querySelector(".form-todo input[type='text']");
+const todoList = document.querySelector(".todo-list");
+
+todoForm.addEventListener("submit",(event)=>{
+    event.preventDefault();
+    const newTodoText = todoInput.value;
+    const newLi = document.createElement("li");
+    const newLiInnerHTML=`
+        <span class="text">${newTodoText}</span>
+        <div class="todo-buttons">
+            <button class="todo-btn done">Done</button>
+            <button class="todo-btn remove">Remove</button>
+        </div>`;
+    newLi.innerHTML=newLiInnerHTML;
+    todoList.append(newLi);
+    todoInput.value="";
+});
+
+
+todoList.addEventListener("click",(event)=>{
+    if (event.target.classList.contains("remove")){
+        const li = event.target.parentNode.parentNode;
+        li.remove();
+    }
+    if (event.target.classList.contains("done")){
+        const li = event.target.parentNode.parentNode;
+        const span = li.firstElementChild;
+        span.style.textDecoration="line-through";
+    }
+});        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
